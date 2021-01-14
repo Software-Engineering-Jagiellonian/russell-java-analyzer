@@ -21,8 +21,8 @@ public class CheckStyleAnalyzer {
     private static final String FORMAT_COMMAND = "-f";
     private static final String OUTPUT_COMMAND = "-o";
     private static final String XML_FORMAT = "xml";
-    private static final String CONFIG_PATH = "/frege-java-analyzer/config/config.xml";
-    private static final String REPORT_PATH = "/frege-java-analyzer/config/report.xml";
+    private static final String CONFIG_PATH = "config/config.xml";
+    private static final String REPORT_PATH = "config/report.xml";
     private static final String EXTERNAL_TYPE_NAMING = "com.puppycrawl.tools.checkstyle.checks.";
 
     private final Gson gson;

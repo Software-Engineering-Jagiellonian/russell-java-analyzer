@@ -5,12 +5,12 @@ import com.frege.java.analyzer.analyzers.model.Statistic;
 import com.frege.java.analyzer.analyzers.model.StatisticCheckStyleModel;
 import com.google.gson.Gson;
 import com.puppycrawl.tools.checkstyle.Main;
+import lombok.SneakyThrows;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
@@ -32,28 +32,23 @@ public class CheckStyleAnalyzer {
         this.gson = gson;
     }
 
+    @SneakyThrows
     public Stream<Statistic> analyze(String filePath) {
-        try {
-            Main.main(
-                    CONFIG_COMMAND, CONFIG_PATH,
-                    FORMAT_COMMAND, XML_FORMAT,
-                    OUTPUT_COMMAND, REPORT_PATH,
-                    filePath
-            );
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        Main.main(
+                CONFIG_COMMAND, CONFIG_PATH,
+                FORMAT_COMMAND, XML_FORMAT,
+                OUTPUT_COMMAND, REPORT_PATH,
+                filePath
+        );
         return convertXmlReport();
     }
 
+    @SneakyThrows
     private Stream<Statistic> convertXmlReport() {
-        String xml = "";
-        try {
-            xml = Files.readString(Path.of(REPORT_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        StatisticCheckStyleModel statisticCheckStyleModel = gson.fromJson(XML.toJSONObject(xml).toString(), StatisticCheckStyleModel.class);
+        StatisticCheckStyleModel statisticCheckStyleModel = gson.fromJson(
+                XML.toJSONObject(Files.readString(Path.of(REPORT_PATH))).toString(),
+                StatisticCheckStyleModel.class
+        );
         String filePath = new File(statisticCheckStyleModel.getCheckstyle().getFile().getName()).getName();
         return statisticCheckStyleModel.getCheckstyle().getFile().getError().stream()
                 .map(it -> errorToStatistic(filePath, it));

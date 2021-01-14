@@ -27,13 +27,10 @@ public class Publisher {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setContentType("application/json");
         Message message = new Message(json.getBytes(), messageProperties);
-        rabbitTemplate.invoke(t -> {
-                    t.send(GARBAGE_COLLECTOR_QUEUE, message);
-                    t.waitForConfirmsOrDie(10_000);
-                    return true;
-                },
-                (tag, multiple) -> System.out.println("Ack: " + tag + ":" + multiple),
-                (tag, multiple) -> System.out.println("Nack: " + tag + ":" + multiple)
+        rabbitTemplate.invoke(operation -> {
+                    operation.convertAndSend(GARBAGE_COLLECTOR_QUEUE, message);
+                    return operation.waitForConfirms(10000);
+                }
         );
     }
 }

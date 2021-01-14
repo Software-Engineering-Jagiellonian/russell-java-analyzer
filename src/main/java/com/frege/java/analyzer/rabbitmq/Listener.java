@@ -1,6 +1,6 @@
 package com.frege.java.analyzer.rabbitmq;
 
-import com.frege.java.analyzer.analyzers.model.Statistics;
+import com.frege.java.analyzer.analyzers.model.Statistic;
 import com.frege.java.analyzer.database.model.RepositoryJavaStatistics;
 import com.google.gson.Gson;
 import com.frege.java.analyzer.analyzers.AnalyzerService;
@@ -53,11 +53,14 @@ public class Listener {
         databaseService.updateAnalyzed(analyzeRepoId);
     }
 
-    private RepositoryJavaStatistics convert(Statistics statistics, String repositoryId) {
+    private RepositoryJavaStatistics convert(Statistic statistic, String repositoryId) {
         return new RepositoryJavaStatistics(
                 generateUUID(),
                 repositoryId,
-                statistics.getFilename()
+                statistic.getFilename(),
+                statistic.getLine(),
+                statistic.getType(),
+                statistic.getReason()
         );
     }
 

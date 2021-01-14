@@ -20,5 +20,10 @@ public class RepositoryJavaStatistics {
     private String repositoryId;
     @Column(name = "filename")
     private String filename;
-    //TODO add statistics
+    @Column(name = "line")
+    private final Integer line;
+    @Column(name = "type")
+    private final String type;
+    @Column(name = "reason")
+    private final String reason;
 }

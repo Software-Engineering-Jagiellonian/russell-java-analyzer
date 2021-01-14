@@ -1,12 +1,14 @@
 package com.frege.java.analyzer.analyzers;
 
-import com.frege.java.analyzer.analyzers.model.Statistics;
+import com.frege.java.analyzer.analyzers.model.Statistic;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Objects;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 @Service
@@ -20,17 +22,19 @@ public class AnalyzerService {
         this.checkStyleAnalyzer = checkStyleAnalyzer;
     }
 
-    public Stream<Statistics> analyze(String path) {
+    public Stream<Statistic> analyze(String path) {
         return filterOutJavaFiles(path)
-                .map(this::calculate);
+                .flatMap(this::calculate);
     }
 
-    private Statistics calculate(String filename) {
+    private Stream<Statistic> calculate(String filename) {
         return checkStyleAnalyzer.analyze(filename);
     }
 
-    private Stream<String> filterOutJavaFiles(String path) {
-        return Arrays.stream(Objects.requireNonNull(new File(path).listFiles((dir, name) -> name.endsWith(JAVA_EXTINCTION))))
-                .map(File::getAbsolutePath);
+    @SneakyThrows
+    public Stream<String> filterOutJavaFiles(String path) {
+        return Files.walk(Paths.get(path))
+                .map(Path::toString)
+                .filter(it -> new File(it).getName().endsWith(JAVA_EXTINCTION));
     }
 }

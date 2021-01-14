@@ -12,14 +12,21 @@ repositories {
 	mavenCentral()
 }
 
+project.ext.gsonVersion = "2.8.6"
+project.ext.checkStyleVersion = "8.38"
+project.ext.jsonVersion = "20201115"
+project.ext.lombokVersion = "1.18.16"
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.google.code.gson:gson:2.8.6'
-	runtimeOnly 'org.postgresql:postgresql'
-	compileOnly 'org.projectlombok:lombok:1.18.16'
-	annotationProcessor 'org.projectlombok:lombok:1.18.16'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-starter-amqp"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	implementation "com.google.code.gson:gson:$gsonVersion"
+	implementation "com.puppycrawl.tools:checkstyle:$checkStyleVersion"
+	implementation "org.json:json:$jsonVersion"
+	runtimeOnly "org.postgresql:postgresql"
+	compileOnly "org.projectlombok:lombok:$lombokVersion"
+	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "org.springframework.amqp:spring-rabbit-test"
 }

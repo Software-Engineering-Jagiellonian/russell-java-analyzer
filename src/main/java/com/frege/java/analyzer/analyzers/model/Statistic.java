@@ -5,7 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Statistics {
+public class Statistic {
     private final String filename;
-    //TODO add statistics
+    private final String type;
+    private final Integer line;
+    private final String reason;
 }

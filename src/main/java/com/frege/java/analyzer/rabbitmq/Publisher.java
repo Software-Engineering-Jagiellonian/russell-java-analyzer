@@ -29,7 +29,7 @@ public class Publisher {
         Message message = new Message(json.getBytes(), messageProperties);
         rabbitTemplate.invoke(operation -> {
                     operation.convertAndSend(GARBAGE_COLLECTOR_QUEUE, message);
-                    return operation.waitForConfirms(10000);
+                    return operation.waitForConfirms(10_000);
                 }
         );
     }

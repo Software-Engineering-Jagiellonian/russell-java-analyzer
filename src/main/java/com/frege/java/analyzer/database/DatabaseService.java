@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
 @Service
+@Transactional
 public class DatabaseService {
     private final RepositoryLanguageRepo repositoryLanguageRepo;
     private final RepositoryLanguageFileRepo repositoryLanguageFileRepo;

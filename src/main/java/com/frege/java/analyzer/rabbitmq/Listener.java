@@ -48,7 +48,7 @@ public class Listener {
         databaseService.saveStatistics(statistics);
 
         publisher.publishMessage(receivedMessage.getRepositoryId());
-        channel.basicNack(tag, false, false);
+        channel.basicAck(tag, false);
 
         databaseService.updateAnalyzed(analyzeRepoId);
     }

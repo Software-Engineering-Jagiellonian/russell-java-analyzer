@@ -1,1 +1,0 @@
-java -jar "/app/frege-java-analyzer-0.0.1-SNAPSHOT.jar" ${JAVA_OPTS}

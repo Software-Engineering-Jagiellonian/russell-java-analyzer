@@ -1,6 +1,6 @@
-# Frege Java Analyzer
+# Russell Java Analyzer
 
-docker image can be found under the name "jagiellonian/frege-java-analyzer"
+docker image can be found under the name "jagiellonian/russell-java-analyzer"
 
 ## Required docker environment variables
 
